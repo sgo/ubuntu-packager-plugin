@@ -1,0 +1,20 @@
+apply plugin:'eclipse'
+apply plugin:'idea'
+apply plugin:'groovy'
+
+version = '0.1-SNAPSHOT'
+sourceCompatibility = 1.6
+
+repositories {
+    mavenCentral()
+    mavenRepo urls:"http://m2repo.spockframework.org/releases"
+}
+
+dependencies {
+    groovy 'org.codehaus.groovy:groovy:1.7.10'
+    compile gradleApi()
+    testCompile 'junit:junit:4.8.1'
+    testCompile "org.spockframework:spock-core:0.5-groovy-1.7", {
+        exclude group:"org.codehaus.groovy", name:"groovy"
+    }
+}
