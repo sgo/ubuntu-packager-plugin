@@ -4,6 +4,7 @@ import packager.commands.Command
 import org.gradle.api.Project
 import packager.commands.Downloader
 import static java.util.Collections.unmodifiableList
+import packager.commands.Extractor
 
 final class UbuntuConvention implements PackagerConvention {
 
@@ -18,12 +19,28 @@ final class UbuntuConvention implements PackagerConvention {
     List<Command> toCommands() {
         def commands = []
         commands << toDownloader()
+        commands << toExtractor()
         unmodifiableList(commands)
     }
 
+    private Extractor toExtractor() {
+        new Extractor(archivedFile, workDir)
+    }
+
     private Downloader toDownloader() {
-        def uri = new URI(archive)
-        new Downloader(uri, new File(new File(project.buildDir, 'ubuntu'), new File(uri).getName()))
+        new Downloader(archiveUri, archivedFile)
+    }
+
+    private File getArchivedFile() {
+        return new File(workDir, new File(archiveUri).getName())
+    }
+
+    private File getWorkDir() {
+        return new File(project.buildDir, 'ubuntu')
+    }
+
+    private URI getArchiveUri() {
+        return new URI(archive)
     }
 
     def ubuntu(Closure closure) {

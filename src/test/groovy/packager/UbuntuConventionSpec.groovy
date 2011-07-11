@@ -5,6 +5,7 @@ import packager.commands.Downloader
 import packager.fakes.TestProject
 import packager.UbuntuPackagerPluginSpec.TestPackager
 import org.gradle.testfixtures.ProjectBuilder
+import packager.commands.Extractor
 
 
 class UbuntuConventionSpec extends Specification {
@@ -23,7 +24,8 @@ class UbuntuConventionSpec extends Specification {
         UbuntuConvention convention = project.convention.plugins.ubuntu
 
         def fileName = new File(archiveUri).getName()
-        def to = new File(build, "ubuntu/$fileName")
+        def work = new File(build, "ubuntu")
+        def to = new File(work, fileName)
 
         when:
         ubuntu {
@@ -32,7 +34,8 @@ class UbuntuConventionSpec extends Specification {
 
         then:
         def downloader = new Downloader(archiveUri, to)
-        convention.toCommands() == [downloader]
+        def extractor = new Extractor(to, work)
+        convention.toCommands() == [downloader, extractor]
 
         where:
         archiveUri    | to2

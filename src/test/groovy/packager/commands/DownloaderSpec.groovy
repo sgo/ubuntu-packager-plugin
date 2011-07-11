@@ -1,7 +1,6 @@
 package packager.commands
 
-import spock.lang.Specification
-
+import spock.lang.*
 
 class DownloaderSpec extends Specification {
 
@@ -38,7 +37,7 @@ class DownloaderSpec extends Specification {
         new File(build, "jetty.tar.gz").bytes == new File(resource('/jetty-1.tar.gz')).bytes
     }
 
-    private URI resource(String path) {
+    URI resource(String path) {
         return getClass().getResource(path).toURI()
     }
 }
