@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import packager.commands.Downloader
 import static java.util.Collections.unmodifiableList
 import packager.commands.Extractor
+import packager.commands.CopyOverrides
 
 final class UbuntuConvention implements PackagerConvention {
 
@@ -20,7 +21,12 @@ final class UbuntuConvention implements PackagerConvention {
         def commands = []
         commands << toDownloader()
         commands << toExtractor()
+        commands << toCopyOverrides()
         unmodifiableList(commands)
+    }
+
+    private CopyOverrides toCopyOverrides() {
+        new CopyOverrides(new File(project.getProjectDir(), 'src/ubuntu/overrides'), workDir)
     }
 
     private Extractor toExtractor() {

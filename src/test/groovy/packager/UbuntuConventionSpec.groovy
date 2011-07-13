@@ -6,6 +6,8 @@ import packager.fakes.TestProject
 import packager.UbuntuPackagerPluginSpec.TestPackager
 import org.gradle.testfixtures.ProjectBuilder
 import packager.commands.Extractor
+import packager.commands.CopyOverrides
+import org.gradle.api.plugins.JavaPlugin
 
 
 class UbuntuConventionSpec extends Specification {
@@ -25,7 +27,7 @@ class UbuntuConventionSpec extends Specification {
 
         def fileName = new File(archiveUri).getName()
         def work = new File(build, "ubuntu")
-        def to = new File(work, fileName)
+        def targetArchive = new File(work, fileName)
 
         when:
         ubuntu {
@@ -33,9 +35,10 @@ class UbuntuConventionSpec extends Specification {
         }
 
         then:
-        def downloader = new Downloader(archiveUri, to)
-        def extractor = new Extractor(to, work)
-        convention.toCommands() == [downloader, extractor]
+        def downloader = new Downloader(archiveUri, targetArchive)
+        def extractor = new Extractor(targetArchive, work)
+        def overrides = new CopyOverrides(new File(project.getProjectDir(), 'src/ubuntu/overrides'), work)
+        convention.toCommands() == [downloader, extractor, overrides]
 
         where:
         archiveUri    | to2
