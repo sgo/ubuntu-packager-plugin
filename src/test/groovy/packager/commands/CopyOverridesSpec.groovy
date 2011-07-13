@@ -6,15 +6,20 @@ import org.slf4j.LoggerFactory
 
 class CopyOverridesSpec extends Specification {
 
+    def source = resource('/overrides')
     def target = new File('build/overrides')
 
     def setup() {
         target.deleteDir()
+        "ln -s /something/nonexisting $source.absolutePath/symlink".execute().waitFor()
+    }
+
+    def cleanup() {
+        "rm $source.absolutePath/symlink".execute().waitFor()
     }
 
     def "contents of a given source dir should be copied over to a given target dir"() {
         given:
-        def source = resource('/overrides')
         def overrides = new CopyOverrides(source, target)
 
         when:
