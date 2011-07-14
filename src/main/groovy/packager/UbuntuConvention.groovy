@@ -81,13 +81,6 @@ final class UbuntuConvention implements PackagerConvention {
         }.with c
     }
 
-    private final class Depends {
-
-        def on(dependency) {
-            depends << dependency
-        }
-    }
-
     def assertConfigurationComplete() {
         assert archive: 'An archive uri should be specified in a ubuntu configuration block!'
         assert project.buildDir: 'The project buildDir should be specified!'
