@@ -10,6 +10,7 @@ import packager.commands.MakeDh
 import packager.commands.makedh.Context
 import static packager.commands.MakeDh.context
 import org.joda.time.DateTime
+import packager.commands.Debuild
 
 final class UbuntuConvention implements PackagerConvention {
 
@@ -46,6 +47,10 @@ final class UbuntuConvention implements PackagerConvention {
 
     private def toDownloader = {
         new Downloader(archiveUri, archivedFile)
+    }
+
+    private def toDebuild = {
+        new Debuild(workDir)
     }
 
     private File getArchivedFile() {
@@ -104,6 +109,7 @@ final class UbuntuConvention implements PackagerConvention {
             toDownloader,
             toExtractor,
             toCopyOverrides,
-            toMakeDh
+            toMakeDh,
+            toDebuild
     ]
 }

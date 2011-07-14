@@ -13,6 +13,7 @@ import static packager.commands.MakeDh.context
 import org.joda.time.DateTime
 import packager.commands.Command
 import org.joda.time.DateTimeUtils
+import packager.commands.Debuild
 
 class UbuntuConventionSpec extends Specification {
 
@@ -49,13 +50,9 @@ class UbuntuConventionSpec extends Specification {
                 convention.toDownloader,
                 convention.toExtractor,
                 convention.toCopyOverrides,
-                convention.toMakeDh
+                convention.toMakeDh,
+                convention.toDebuild
         ]
-    }
-
-    private static final class Task {
-        def name
-        def execute() {[name:name]}
     }
 
     def "toMakeDh()"() {
@@ -145,6 +142,11 @@ class UbuntuConventionSpec extends Specification {
         ]
     }
 
+    def "toDebuild()"() {
+        expect:
+        convention.toDebuild() == new Debuild(work)
+    }
+
     private File targetArchive(uri) {
         def fileName = new File(uri).getName()
         def work = new File(build, "ubuntu")
@@ -158,5 +160,10 @@ class UbuntuConventionSpec extends Specification {
 
     private File getWork() {
         return new File(build, "ubuntu")
+    }
+
+    private static final class Task {
+        def name
+        def execute() {[name:name]}
     }
 }
