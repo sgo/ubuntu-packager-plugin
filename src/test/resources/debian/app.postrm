@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+case "\$1" in
+    purge)
+        userdel $name || true
+rm -rf /var/lib/$name /var/log/$name /var/run/${name}.pid /var/cache/$name
+    ;;
+
+    remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+    ;;
+
+    *)
+        echo "postrm called with unknown argument \\`\$1'" >&2
+        exit 1
+    ;;
+esac
+
+#DEBHELPER#
+
+exit 0

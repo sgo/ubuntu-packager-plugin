@@ -13,6 +13,7 @@ repositories {
 dependencies {
     groovy 'org.codehaus.groovy:groovy:1.7.10'
     compile gradleApi()
+    compile 'joda-time:joda-time:1.6.2'
     testCompile 'junit:junit:4.8.1'
     testCompile 'ch.qos.logback:logback-classic:0.9.29'
     testCompile "org.spockframework:spock-core:0.5-groovy-1.7", {
