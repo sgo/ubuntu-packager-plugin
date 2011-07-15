@@ -5,16 +5,6 @@ import spock.lang.Specification
 
 class TodoSpec extends Specification {
 
-    def "add tests for required ubuntu {} block properties"() {
-        expect:
-        false
-    }
-
-    def "src/ubuntu/overrides should be optional but gives 404 now"() {
-        expect:
-        false
-    }
-
     def "ubuntu plugin does not provide a clean task"() {
         expect:
         false

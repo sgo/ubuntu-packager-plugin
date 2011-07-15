@@ -31,6 +31,14 @@ class CopyOverridesSpec extends Specification {
         copiedDirsRecursively()
     }
 
+    def "do nothing if source dir does not exist"() {
+        when:
+        new CopyOverrides(new File('/not/exists'), target).execute()
+
+        then:
+        assert !target.list()
+    }
+
     private void copiedDirsRecursively() {
         assert new File(target, 'dir').list() as Set == ['indir.file'] as Set
     }

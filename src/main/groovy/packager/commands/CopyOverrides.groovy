@@ -17,17 +17,30 @@ final class CopyOverrides implements Command {
     }
 
     @Override void execute() {
-        assert source.directory
+        withExistingSourceDir {
+            withTargetDir {
+                source.listFiles().each {File f ->
+                    def command = "cp -Rf $f.absolutePath $target.absolutePath".toString()
+                    logger.debug(command)
+                    def process = command.execute()
+                    def result = process.waitFor()
+                    assert result == 0: "Failed to copy overrides! [${process.err.text.replaceAll(/[\n\r]*/, '')}]"
+                }
+            }
+        }
+    }
+
+    private withExistingSourceDir(c) {
+        if(source.exists()) {
+            assert source.directory
+            c()
+        }
+    }
+
+    private withTargetDir(c) {
         if(!target.exists()) target.mkdirs()
         assert target.directory
-
-        source.listFiles().each {File f ->
-            def command = "cp -Rf $f.absolutePath $target.absolutePath".toString()
-            logger.debug(command)
-            def process = command.execute()
-            def result = process.waitFor()
-            assert result == 0: "Failed to copy overrides! [${process.err.text.replaceAll(/[\n\r]*/, '')}]"
-        }
+        c()
     }
 
     boolean equals(o) {
