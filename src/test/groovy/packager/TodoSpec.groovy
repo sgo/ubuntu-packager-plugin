@@ -5,11 +5,6 @@ import spock.lang.Specification
 
 class TodoSpec extends Specification {
 
-    def "MakeDh.withRequiredFilesProvided does not provide understandable information on what's wrong when src/ubuntu/debian does not exist"() {
-        expect:
-        false
-    }
-
     def "looks like the downloaded archive was not extracted... in fact nothing was copied to build/ubuntu"() {
         expect:
         false

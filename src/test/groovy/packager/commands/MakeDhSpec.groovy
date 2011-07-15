@@ -39,6 +39,21 @@ class MakeDhSpec extends Specification {
         ]
     }
 
+    def "verify the source dir exists on execute"() {
+        given:
+        def command = makedh()
+        command.tasks = []
+        sources.deleteDir()
+
+        expect:
+        try {
+            command.execute()
+            assert false
+        } catch(FileNotFoundException e) {
+            e.message == 'whatever'
+        }
+    }
+
     def "tasks to be executed should be stored in the tasks property"() {
         given:
         def command = makedh()

@@ -7,6 +7,7 @@ import static java.util.Collections.unmodifiableList
 final class MakeDh implements Command {
 
     @Override void execute() {
+        if(!sources.exists()) throw new FileNotFoundException(sources.absolutePath)
         tasks*.call()
     }
 
