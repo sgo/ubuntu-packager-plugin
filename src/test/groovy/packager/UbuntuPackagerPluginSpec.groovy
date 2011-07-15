@@ -20,6 +20,7 @@ class UbuntuPackagerPluginSpec extends Specification {
 
         then:
         assert project.tasks.deb
+        assert project.tasks.clean
         assert project.convention.plugins.ubuntu in UbuntuConvention
     }
 
@@ -47,6 +48,21 @@ class UbuntuPackagerPluginSpec extends Specification {
     def "the packager plugin should use the UbuntuPackager by default"() {
         expect:
         new UbuntuPackagerPlugin().packager in UbuntuPackager
+    }
+
+    def "the clean task should delete the convention.workDir"() {
+        given:
+        def project = new TestProject()
+        project.buildDir = new File('build/ubuntupackagerplugin')
+        plugin.apply(project)
+        UbuntuConvention convention = project.convention.plugins.ubuntu
+        convention.workDir.mkdirs()
+
+        when:
+        project.getTask('clean').tasks*.execute()
+
+        then:
+        !convention.workDir.exists()
     }
 
     private static final class TestPackager implements Packager {

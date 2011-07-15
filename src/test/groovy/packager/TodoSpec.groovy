@@ -5,11 +5,6 @@ import spock.lang.Specification
 
 class TodoSpec extends Specification {
 
-    def "ubuntu plugin does not provide a clean task"() {
-        expect:
-        false
-    }
-
     def "MakeDh.withRequiredFilesProvided does not provide understandable information on what's wrong when src/ubuntu/debian does not exist"() {
         expect:
         false

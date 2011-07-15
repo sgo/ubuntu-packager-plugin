@@ -7,6 +7,7 @@ final class UbuntuPackagerPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.convention.plugins.ubuntu = new UbuntuConvention(project)
         project.task('deb') << {packager.execute(project.convention.plugins.ubuntu.toCommands())}
+        project.task('clean') << {project.convention.plugins.ubuntu.workDir.deleteDir()}
     }
 
     private final Packager packager

@@ -58,7 +58,7 @@ final class UbuntuConvention implements PackagerConvention {
         return new File(workDir, new File(archiveUri).getName())
     }
 
-    private File getWorkDir() {
+    File getWorkDir() {
         return new File(project.buildDir, 'ubuntu')
     }
 
