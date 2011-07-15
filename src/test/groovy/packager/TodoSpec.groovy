@@ -5,11 +5,6 @@ import spock.lang.Specification
 
 class TodoSpec extends Specification {
 
-    def "looks like the downloaded archive was not extracted... in fact nothing was copied to build/ubuntu"() {
-        expect:
-        false
-    }
-
     def "downloader will always download to jetty.tar.gz"() {
         expect:
         false

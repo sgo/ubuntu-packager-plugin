@@ -25,6 +25,17 @@ class ExtractorSpec extends Specification {
         new File(build, 'jetty/contexts/test.xml').exists()
     }
 
+    def "throw an assertion error if the archive could not be extracted"() {
+        given:
+        def extractor = new Extractor(new File('/whatever/test.tar.gz'), build)
+
+        when:
+        extractor.execute()
+
+        then:
+        thrown(AssertionError)
+    }
+
     URI resource(String path) {
         return getClass().getResource(path).toURI()
     }

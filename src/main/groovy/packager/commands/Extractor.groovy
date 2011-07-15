@@ -20,7 +20,7 @@ final class Extractor implements Command {
         to.mkdirs()
         def command = "tar -x -z -v -C $to.absolutePath -f $archive.absolutePath"
         def process = command.execute()
-        process.waitFor()
+        assert process.waitFor() == 0 : process.err.text
         logger.debug("extracting...\n$command\n${process.err.text}")
     }
 
