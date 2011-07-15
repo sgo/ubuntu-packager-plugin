@@ -15,6 +15,7 @@ import packager.commands.Debuild
 final class UbuntuConvention implements PackagerConvention {
 
     List<Command> toCommands() {
+        assertConfigurationComplete()
         unmodifiableList(toCommandTasks*.call())
     }
 
@@ -67,7 +68,6 @@ final class UbuntuConvention implements PackagerConvention {
 
     def ubuntu(Closure closure) {
         with closure
-        assertConfigurationComplete()
     }
 
     def depends(Closure closure) {
@@ -87,7 +87,11 @@ final class UbuntuConvention implements PackagerConvention {
     }
 
     def assertConfigurationComplete() {
-        assert archive: 'An archive uri should be specified in a ubuntu configuration block!'
+        assert archive : 'An archive uri should be specified in a ubuntu configuration block'
+        assert releaseNotes : 'Release notes information should be specified in a ubuntu configuration block'
+        assert author : 'Author should be specified in a ubuntu configuration block'
+        assert email : 'E-mail should be specified in a ubuntu configuration block'
+        assert homepage : 'A homepage should be specified in a ubuntu configuration block'
         assert project.buildDir: 'The project buildDir should be specified!'
     }
 

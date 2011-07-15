@@ -14,6 +14,7 @@ import org.joda.time.DateTime
 import packager.commands.Command
 import org.joda.time.DateTimeUtils
 import packager.commands.Debuild
+import com.sun.tools.javac.util.DefaultFileManager.Archive
 
 class UbuntuConventionSpec extends Specification {
 
@@ -32,16 +33,17 @@ class UbuntuConventionSpec extends Specification {
 
     def "toCommands()"() {
         given:
-        convention.toCommandTasks = tasks.collect([]) {task-> return {task.execute()}}
+        convention.toCommandTasks = tasks.collect([]) {task -> return {task.execute()}}
+        withUbuntuConfig()
 
         expect:
         convention.toCommands()*.name == commands
 
         where:
-        tasks                                            | commands
-        []                                               | []
-        [new Task(name:'task1')]                         | ['task1']
-        [new Task(name:'task1'), new Task(name:'task2')] | ['task1', 'task2']
+        tasks                                              | commands
+        []                                                 | []
+        [new Task(name: 'task1')]                          | ['task1']
+        [new Task(name: 'task1'), new Task(name: 'task2')] | ['task1', 'task2']
     }
 
     def "toCommandTasks property"() {
@@ -53,6 +55,44 @@ class UbuntuConventionSpec extends Specification {
                 convention.toMakeDh,
                 convention.toDebuild
         ]
+    }
+
+    def "req config"() {
+        given:
+        convention.toCommandTasks = []
+        withUbuntuConfig(config)
+
+        expect:
+        try {
+            convention.toCommands()
+            assert false
+        } catch (AssertionError e) {
+            assert e.message == message
+        }
+
+        where:
+        config         | message
+        'archive'      | 'An archive uri should be specified in a ubuntu configuration block. Expression: archive. Values: archive = null'
+        'releaseNotes' | 'Release notes information should be specified in a ubuntu configuration block. Expression: releaseNotes. Values: releaseNotes = null'
+        'author'       | 'Author should be specified in a ubuntu configuration block. Expression: author. Values: author = null'
+        'email'        | 'E-mail should be specified in a ubuntu configuration block. Expression: email. Values: email = null'
+        'homepage'     | 'A homepage should be specified in a ubuntu configuration block. Expression: homepage. Values: homepage = null'
+    }
+
+    private def withUbuntuConfig(config = '') {
+        ubuntu {
+            if(config != 'archive') archive = 'uri'
+            if(config != 'releaseNotes') releaseNotes = 'notes'
+            if(config != 'author') author = 'author'
+            if(config != 'email') email = 'email'
+            if(config != 'homepage') homepage = 'web'
+            depends {
+                on 'something'
+            }
+            dirs {
+                dir 'somewhere'
+            }
+        }
     }
 
     def "toMakeDh()"() {
@@ -164,6 +204,7 @@ class UbuntuConventionSpec extends Specification {
 
     private static final class Task {
         def name
-        def execute() {[name:name]}
+
+        def execute() {[name: name]}
     }
 }

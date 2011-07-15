@@ -1,22 +1,84 @@
-apply plugin:'eclipse'
-apply plugin:'idea'
-apply plugin:'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'groovy'
+apply plugin: 'maven'
 
+group = 'be.thinkerit.gradle'
+artifact = 'ubuntu-packager-plugin'
 version = '0.1-SNAPSHOT'
 sourceCompatibility = 1.6
 
+def props = new Properties();
+def localProperties = new File("${System.getProperty('user.home')}/.gradle/ubuntu-packager-plugin.properties")
+if(localProperties.exists()) localProperties.withInputStream { props.load(it) }
+
+org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials("Sonatype Nexus Repository Manager", "nexus.thinkerit.be", props.get('mvm.username'), props.get('mvn.password'))
 repositories {
-    mavenCentral()
-    mavenRepo urls:"http://m2repo.spockframework.org/releases"
+    mavenRepo urls: "http://nexus.thinkerit.be/content/groups/public"
+}
+
+configurations {
+    deployerJars
 }
 
 dependencies {
     groovy 'org.codehaus.groovy:groovy:1.7.10'
+
     compile gradleApi()
     compile 'joda-time:joda-time:1.6.2'
+
     testCompile 'junit:junit:4.8.1'
     testCompile 'ch.qos.logback:logback-classic:0.9.29'
     testCompile "org.spockframework:spock-core:0.5-groovy-1.7", {
-        exclude group:"org.codehaus.groovy", name:"groovy"
+        exclude group: "org.codehaus.groovy", name: "groovy"
     }
+
+    deployerJars "org.apache.maven.wagon:wagon-http:1.0"
+}
+
+task packageJavadoc(type: Jar, dependsOn: 'javadoc') {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+task packageSources(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives packageJavadoc
+    archives packageSources
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        configuration = configurations.deployerJars
+        repository url: "http://nexus.thinkerit.be/content/repositories/${version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}", {
+            authentication userName: props.get('mvn.username'), password: props.get('mvn.password')
+        }
+
+        pom.project {
+            name 'ubuntu-packager-plugin - Gradle plugin for constructing Ubuntu/Debian packages'
+            packaging 'jar'
+            description 'Provides a task similar to Tar and Zip for constructing debian package files.'
+            inceptionYear '2011'
+
+            developers {
+                developer {
+                    id 'sgo'
+                    name 'Sebastian Gozin'
+                    email 'sgo@thinkerit.be'
+                    roles {
+                        role 'Developer'
+                    }
+                    timezone '+1'
+                }
+            }
+        }
+    }
+}
+
+task createWrapper(type: Wrapper) {
+    gradleVersion = '1.0-milestone-2'
 }
