@@ -17,7 +17,7 @@ private static final class Debuild implements Command {
     @Override void execute() {
         target.mkdirs()
 
-        def command = "debuild"
+        def command = "debuild -us -uc -B > /dev/null"
         def process = command.execute([], target)
         assert process.waitFor() == 0: process.err.text
         logger.debug(process.in.text)
