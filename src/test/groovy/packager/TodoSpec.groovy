@@ -5,11 +5,6 @@ import spock.lang.Specification
 
 class TodoSpec extends Specification {
 
-    def "downloader will always download to jetty.tar.gz"() {
-        expect:
-        false
-    }
-
     def "extractor does not detect failures"() {
         expect:
         false

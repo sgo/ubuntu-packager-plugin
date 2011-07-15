@@ -11,8 +11,8 @@ final class Downloader {
     }
 
     void execute() {
-        new File('build/download').mkdirs()
-        def f = new File('build/download/jetty.tar.gz')
+        to.mkdirs()
+        def f = new File(to, new File(from.toURL().file).name)
         if(f.exists()) f.delete()
         f << from.toURL().openStream()
     }
