@@ -11,10 +11,13 @@ final class Downloader {
     }
 
     void execute() {
-        to.mkdirs()
-        def f = new File(to, new File(from.toURL().file).name)
-        if(f.exists()) f.delete()
-        f << from.toURL().openStream()
+        def dir = to.parentFile
+        dir.mkdirs()
+
+        def file = new File(dir, to.name)
+        if(file.exists()) file.delete()
+//        file.withWriter {it << from.toURL().openStream().bytes}
+        file << from.toURL().openStream()
     }
 
     boolean equals(o) {
