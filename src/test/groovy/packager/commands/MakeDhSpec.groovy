@@ -60,6 +60,7 @@ class MakeDhSpec extends Specification {
 
         expect:
         command.tasks == [
+                command.createTargetDir,
                 command.copyRequiredUserFiles,
                 command.copyOptionalUserFiles,
                 command.generateSourceFormat,
@@ -68,6 +69,17 @@ class MakeDhSpec extends Specification {
                 command.generateDirs,
                 command.generateRules
         ]
+    }
+
+    def "target dir should be created if not exists"() {
+        given:
+        work.deleteDir()
+
+        when:
+        makedh().createTargetDir()
+
+        then:
+        work.exists()
     }
 
     def "required files should be provided by the user"() {

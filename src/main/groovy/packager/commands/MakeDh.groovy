@@ -11,6 +11,10 @@ final class MakeDh implements Command {
         tasks*.call()
     }
 
+    private def createTargetDir = {
+        target.mkdirs()
+    }
+
     private def copyRequiredUserFiles = {
         withRequiredFilesProvided {
             it.each {
@@ -131,7 +135,7 @@ final class MakeDh implements Command {
     private final Context context
     private final GStringTemplateEngine engine = new GStringTemplateEngine()
 
-    private def tasks = [copyRequiredUserFiles, copyOptionalUserFiles, generateSourceFormat, generateChangelog, generateControl, generateDirs, generateRules]
+    private def tasks = [createTargetDir, copyRequiredUserFiles, copyOptionalUserFiles, generateSourceFormat, generateChangelog, generateControl, generateDirs, generateRules]
 
     MakeDh(File sources, File target, Context context) {
         this.sources = sources
