@@ -27,7 +27,7 @@ final class UbuntuConvention implements PackagerConvention {
                 author: author,
                 email: email,
                 homepage: homepage,
-                description: project.description,
+                description: project.description ?: '',
                 depends: depends,
                 dirs: dirs,
                 time: new DateTime()
@@ -92,7 +92,8 @@ final class UbuntuConvention implements PackagerConvention {
         assert author : 'Author should be specified in a ubuntu configuration block'
         assert email : 'E-mail should be specified in a ubuntu configuration block'
         assert homepage : 'A homepage should be specified in a ubuntu configuration block'
-        assert project.buildDir: 'The project buildDir should be specified!'
+        assert project.buildDir : 'The project buildDir should be specified!'
+        assert project.version : 'The project version should be specified'
     }
 
     private final Project project

@@ -15,6 +15,7 @@ import packager.commands.Command
 import org.joda.time.DateTimeUtils
 import packager.commands.Debuild
 import com.sun.tools.javac.util.DefaultFileManager.Archive
+import sun.tools.jconsole.Version
 
 class UbuntuConventionSpec extends Specification {
 
@@ -57,7 +58,7 @@ class UbuntuConventionSpec extends Specification {
         ]
     }
 
-    def "req config"() {
+    def "required ubuntu block configuration"() {
         given:
         convention.toCommandTasks = []
         withUbuntuConfig(config)
@@ -77,6 +78,26 @@ class UbuntuConventionSpec extends Specification {
         'author'       | 'Author should be specified in a ubuntu configuration block. Expression: author. Values: author = null'
         'email'        | 'E-mail should be specified in a ubuntu configuration block. Expression: email. Values: email = null'
         'homepage'     | 'A homepage should be specified in a ubuntu configuration block. Expression: homepage. Values: homepage = null'
+    }
+
+    def "required project configuration"() {
+        given:
+        project.version = ''
+        convention.toCommandTasks = []
+        withUbuntuConfig()
+
+        expect:
+        try {
+            convention.toCommands()
+            assert false
+        } catch (AssertionError e) {
+            assert e.message == 'The project version should be specified. Expression: project.version'
+        }
+    }
+
+    def "null description should default to empty string"() {
+        expect:
+        convention.toContext().description == ''
     }
 
     private def withUbuntuConfig(config = '') {
