@@ -9,22 +9,27 @@ class DebuildSpec extends Specification {
 
     def setup() {
         work.deleteDir()
-
-        String.metaClass.execute = {List args, File dir->
-            new File(work, 'test.deb').text = 'test'
-            [waitFor:{-> 0}, in:[text:'stdout'], err:[text:'stderr']]
-        }
+        work.mkdirs()
     }
 
     def cleanup() {
-        metaClassRegistry.removeMetaClass String
+        work.deleteDir()
     }
 
     def "debuild"() {
+        given:
+        def command = new Debuild(work)
+        command.script = getClass().getResourceAsStream('/debuild/debuild').text
+
         when:
-        new Debuild(work).execute()
+        command.execute()
 
         then:
         new File(work, 'test.deb').exists()
+    }
+
+    def "default script should be read from classpath:/packager/debuild/debuild.sh"() {
+        expect:
+        new Debuild(work).script == getClass().getResourceAsStream('/packager/debuild/debuild.sh').text
     }
 }
