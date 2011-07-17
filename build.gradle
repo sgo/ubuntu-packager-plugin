@@ -8,15 +8,7 @@ artifact = 'ubuntu-packager-plugin'
 version = '0.1-SNAPSHOT'
 sourceCompatibility = 1.6
 
-def props = new Properties();
-def localProperties = new File("${System.getProperty('user.home')}/.gradle/ubuntu-packager-plugin.properties")
-if(localProperties.exists()) {
-    def copiedProperties = new File(projectDir, 'ubuntu-packager-plugin.properties')
-    copiedProperties.text = localProperties.text
-    copiedProperties.withInputStream { props.load(it) }
-}
-
-org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials("Sonatype Nexus Repository Manager", "nexus.thinkerit.be", props.get('mvm.username'), props.get('mvn.password'))
+org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials("Sonatype Nexus Repository Manager", "nexus.thinkerit.be", NEXUS_USER, NEXUS_PASS)
 repositories {
     mavenRepo urls: "http://nexus.thinkerit.be/content/groups/public"
 }
@@ -59,7 +51,7 @@ uploadArchives {
     repositories.mavenDeployer {
         configuration = configurations.deployerJars
         repository url: "http://nexus.thinkerit.be/content/repositories/${version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}", {
-            authentication userName: props.get('mvn.username'), password: props.get('mvn.password')
+            authentication userName: NEXUS_USER, password: NEXUS_PASS
         }
 
         pom.project {
