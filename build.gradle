@@ -12,7 +12,7 @@ def props = new Properties();
 def localProperties = new File("${System.getProperty('user.home')}/.gradle/ubuntu-packager-plugin.properties")
 if(localProperties.exists()) localProperties.withInputStream { props.load(it) }
 
-org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials("Sonatype Nexus Repository Manager", "nexus.thinkerit.be", props.get('mvm.username'), props.get('mvn.password'))
+org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials("Sonatype Nexus Repository Manager", "nexus.thinkerit.be", props.get('mvm.username').toString(), props.get('mvn.password').toString())
 repositories {
     mavenRepo urls: "http://nexus.thinkerit.be/content/groups/public"
 }
