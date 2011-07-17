@@ -4,7 +4,6 @@ apply plugin: 'groovy'
 apply plugin: 'maven'
 
 group = 'be.thinkerit.gradle'
-artifact = 'ubuntu-packager-plugin'
 version = System.getenv('VERSION') ?: 'dev-SNAPSHOT'
 sourceCompatibility = 1.6
 
@@ -55,6 +54,7 @@ uploadArchives {
         }
 
         pom.project {
+            artifactId 'ubuntu-packager-plugin'
             name 'ubuntu-packager-plugin - Gradle plugin for constructing Ubuntu/Debian packages'
             packaging 'jar'
             description 'Provides a task similar to Tar and Zip for constructing debian package files.'
