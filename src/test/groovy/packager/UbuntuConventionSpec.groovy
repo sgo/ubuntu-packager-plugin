@@ -1,21 +1,10 @@
 package packager
 
-import spock.lang.Specification
-import packager.commands.Downloader
-import packager.fakes.TestProject
-import packager.UbuntuPackagerPluginSpec.TestPackager
-import org.gradle.testfixtures.ProjectBuilder
-import packager.commands.Extractor
-import packager.commands.CopyOverrides
-import org.gradle.api.plugins.JavaPlugin
-import packager.commands.MakeDh
-import static packager.commands.MakeDh.context
-import org.joda.time.DateTime
-import packager.commands.Command
-import org.joda.time.DateTimeUtils
-import packager.commands.Debuild
-import com.sun.tools.javac.util.DefaultFileManager.Archive
-import sun.tools.jconsole.Version
+import org.gradle.testfixtures.*
+import org.joda.time.*
+import packager.commands.*
+import static packager.commands.MakeDh.*
+import spock.lang.*
 
 class UbuntuConventionSpec extends Specification {
 
