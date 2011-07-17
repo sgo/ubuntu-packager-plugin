@@ -13,6 +13,19 @@ import org.gradle.api.tasks.*
 import org.gradle.process.*
 
 final class TestProject implements Project {
+
+    private final String name
+    private final String version
+
+    TestProject() {
+
+    }
+
+    TestProject(String name, String version) {
+        this.name = name
+        this.version = version
+    }
+
     Project getRootProject() {
         return null
     }
@@ -47,7 +60,7 @@ final class TestProject implements Project {
     }
 
     String getName() {
-        return null
+        name
     }
 
     String getDescription() {
@@ -67,7 +80,7 @@ final class TestProject implements Project {
     }
 
     Object getVersion() {
-        return null
+        version
     }
 
     void setVersion(Object o) {

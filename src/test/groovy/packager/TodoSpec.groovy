@@ -14,9 +14,4 @@ class TodoSpec extends Specification {
 //        expect:
 //        false
 //    }
-
-//    def "gradle clean does not cleanup debian artifacts"() {
-//        expect:
-//        false
-//    }
 }
