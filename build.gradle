@@ -11,6 +11,10 @@ configurations {
     deployerJars
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     groovy 'org.codehaus.groovy:groovy:1.7.10'
 
