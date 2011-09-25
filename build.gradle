@@ -7,11 +7,6 @@ group = 'be.thinkerit.gradle'
 version = System.getenv('VERSION') ?: 'dev-SNAPSHOT'
 sourceCompatibility = 1.6
 
-org.apache.ivy.util.url.CredentialsStore.INSTANCE.addCredentials("Sonatype Nexus Repository Manager", "nexus.thinkerit.be", NEXUS_USER, NEXUS_PASS)
-repositories {
-    mavenRepo urls: "http://nexus.thinkerit.be/content/groups/public"
-}
-
 configurations {
     deployerJars
 }
@@ -49,9 +44,6 @@ artifacts {
 uploadArchives {
     repositories.mavenDeployer {
         configuration = configurations.deployerJars
-        repository url: "http://nexus.thinkerit.be/content/repositories/${version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}", {
-            authentication userName: NEXUS_USER, password: NEXUS_PASS
-        }
 
         pom.project {
             artifactId 'ubuntu-packager-plugin'
