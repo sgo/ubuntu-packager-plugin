@@ -81,6 +81,7 @@ The plugin expects the presence of a tgz which isn't common for Java projects th
 The package will be named based on the gradle name property which is the same as the directory in which the gradle project is located. As a result when using a CI system such as jenkins this name/dir will be called workspace and is probably not what you want. To work around this I have been putting my package scripts in their own subdir named the way I want the package to be named.
 
 E.g:
+
 * myapp/grails
 * myapp/myapp
 * myapp/myapp-data
