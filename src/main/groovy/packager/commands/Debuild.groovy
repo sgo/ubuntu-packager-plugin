@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory
 import org.slf4j.Logger
 
 
-private static final class Debuild implements Command {
+final class Debuild implements Command {
 
     private static final Logger logger = LoggerFactory.getLogger(Debuild)
 
