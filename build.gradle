@@ -21,10 +21,12 @@ dependencies {
     compile gradleApi()
     compile 'joda-time:joda-time:1.6.2'
 
+    runtime 'commons-lang:commons-lang:2.6'
+
     testCompile 'junit:junit:4.8.2'
     testCompile 'ch.qos.logback:logback-classic:1.0.0'
     testCompile "org.spockframework:spock-core:0.6-groovy-1.8", {
-        exclude group: "org.codehaus.groovy", name: "groovy"
+        exclude module:"groovy-all"
     }
 
     deployerJars "org.apache.maven.wagon:wagon-http:1.0"
@@ -72,5 +74,5 @@ uploadArchives {
 }
 
 task createWrapper(type: Wrapper) {
-    gradleVersion = '1.0-milestone-2'
+    gradleVersion = '1.0-milestone-9'
 }
