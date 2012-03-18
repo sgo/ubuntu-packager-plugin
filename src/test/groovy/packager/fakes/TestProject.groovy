@@ -50,6 +50,7 @@ final class TestProject implements Project {
     }
 
     File buildDir
+
     File buildDir() {
         buildDir
     }
@@ -208,6 +209,10 @@ final class TestProject implements Project {
         return null
     }
 
+    void evaluationDependsOnChildren() {
+
+    }
+
     Project childrenDependOnMe() {
         return null
     }
@@ -276,12 +281,12 @@ final class TestProject implements Project {
         return null
     }
 
-  @Override
-  ConfigurableFileTree fileTree(final Object o, final Closure closure) {
-    return null
-  }
+    @Override
+    ConfigurableFileTree fileTree(final Object o, final Closure closure) {
+        return null
+    }
 
-  ConfigurableFileTree fileTree(Map<String, ?> stringMap) {
+    ConfigurableFileTree fileTree(Map<String, ?> stringMap) {
         return null
     }
 
@@ -509,17 +514,17 @@ final class TestProject implements Project {
         return null
     }
 
-  @Override
-  ExtensionContainer getExtensions() {
-    return null
-  }
+    @Override
+    ExtensionContainer getExtensions() {
+        return null
+    }
 
-  @Override
-  org.gradle.api.resources.ResourceHandler getResources() {
-    return null
-  }
+    @Override
+    org.gradle.api.resources.ResourceHandler getResources() {
+        return null
+    }
 
-  int compareTo(Project t) {
+    int compareTo(Project t) {
         return 0
     }
 
@@ -738,12 +743,12 @@ final class TestProject implements Project {
             return null
         }
 
-      @Override
-      org.gradle.api.internal.DynamicObject getExtensionsAsDynamicObject() {
-        return null
-      }
+        @Override
+        org.gradle.api.internal.DynamicObject getExtensionsAsDynamicObject() {
+            return null
+        }
 
-      boolean hasProperty(String s) {
+        boolean hasProperty(String s) {
             return false
         }
 
@@ -759,32 +764,42 @@ final class TestProject implements Project {
             return null
         }
 
-      @Override
-      void add(final String s, final Object o) {
-      }
+        @Override
+        void add(final String s, final Object o) {
+        }
 
-      @Override
-      void add(final String s, final Class<?> aClass, final Object... objects) {
-      }
+        @Override
+        void add(final String s, final Class<?> aClass, final Object... objects) {
+        }
 
-      @Override
-      def <T> T getByType(final Class<T> tClass) {
-        return null
-      }
+        @Override
+        def <T> T create(String rule, Class<T> tClass, Object... objects) {
+            return null
+        }
 
-      @Override
-      def <T> T findByType(final Class<T> tClass) {
-        return null
-      }
+        @Override
+        def <T> T getByType(final Class<T> tClass) {
+            return null
+        }
 
-      @Override
-      Object getByName(final String s) {
-        return null
-      }
+        @Override
+        def <T> T findByType(final Class<T> tClass) {
+            return null
+        }
 
-      @Override
-      Object findByName(final String s) {
-        return null
-      }
+        @Override
+        Object getByName(final String s) {
+            return null
+        }
+
+        @Override
+        Object findByName(final String s) {
+            return null
+        }
+
+        @Override
+        ExtraPropertiesExtension getExtraProperties() {
+            return null
+        }
     }
 }

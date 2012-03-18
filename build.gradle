@@ -24,7 +24,7 @@ dependencies {
     testCompile 'junit:junit:4.8.2'
     testCompile 'ch.qos.logback:logback-classic:1.0.0'
     testCompile "org.spockframework:spock-core:0.6-groovy-1.8", {
-        exclude group: "org.codehaus.groovy", name: "groovy"
+        exclude module:"groovy-all"
     }
 
     deployerJars "org.apache.maven.wagon:wagon-http:1.0"
