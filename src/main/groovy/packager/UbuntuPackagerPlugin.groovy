@@ -22,7 +22,7 @@ final class UbuntuPackagerPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.convention.plugins.ubuntu = new UbuntuConvention(project)
         project.task('deb') << {packager.execute(project.convention.plugins.ubuntu.toCommands())}
-        project.task('clean') << {
+        project.task('cleanDeb') << {
             File work = project.convention.plugins.ubuntu.workDir
             work.deleteDir()
             work.parentFile.listFiles({File f, String name ->

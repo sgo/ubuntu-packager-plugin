@@ -15,10 +15,10 @@
  */
 package packager
 
-import org.gradle.testfixtures.*
-import packager.commands.*
-import packager.fakes.*
-import spock.lang.*
+import org.gradle.testfixtures.ProjectBuilder
+import packager.commands.Command
+import packager.fakes.TestProject
+import spock.lang.Specification
 
 class UbuntuPackagerPluginSpec extends Specification {
 
@@ -35,7 +35,7 @@ class UbuntuPackagerPluginSpec extends Specification {
 
         then:
         assert project.tasks.deb
-        assert project.tasks.clean
+        assert project.tasks.cleanDeb
         assert project.convention.plugins.ubuntu in UbuntuConvention
     }
 
@@ -71,7 +71,7 @@ class UbuntuPackagerPluginSpec extends Specification {
         convention.workDir.mkdirs()
 
         when:
-        project.getTask('clean').tasks*.execute()
+        project.getTask('cleanDeb').tasks*.execute()
 
         then:
         !convention.workDir.exists()
@@ -84,7 +84,7 @@ class UbuntuPackagerPluginSpec extends Specification {
         artifact.text = suffix
 
         when:
-        project.getTask('clean').tasks*.execute()
+        project.getTask('cleanDeb').tasks*.execute()
 
         then:
         !artifact.exists()
