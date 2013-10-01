@@ -80,6 +80,7 @@ class MakeDhSpec extends Specification {
                 command.copyOptionalUserFiles,
                 command.generateSourceFormat,
                 command.generateChangelog,
+                command.generateCompat,
                 command.generateControl,
                 command.generateDirs,
                 command.generateRules
@@ -211,13 +212,13 @@ class MakeDhSpec extends Specification {
 Section: unknown
 Priority: extra
 Maintainer: $author <$email>
-Build-Depends: debhelper (>= 7)
+Build-Depends: debhelper (>= 9)
 Standards-Version: 3.8.3
 Homepage: $homepage
 
 Package: $name
-Architecture: any
-Depends: \${shlibs:Depends}, \${misc:Depends}${depends ? ", ${depends.join(', ')}" : ''}
+Architecture: all
+Depends: \${misc:Depends}${depends ? ", ${depends.join(', ')}" : ''}
 Description: $name
  $description
 """
