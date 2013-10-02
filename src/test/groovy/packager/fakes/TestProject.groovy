@@ -18,6 +18,7 @@ package packager.fakes
 import org.gradle.api.*
 import org.gradle.api.artifacts.*
 import org.gradle.api.artifacts.dsl.*
+import org.gradle.api.component.*
 import org.gradle.api.file.*
 import org.gradle.api.initialization.dsl.*
 import org.gradle.api.invocation.*
@@ -39,6 +40,10 @@ final class TestProject implements Project {
     TestProject(String name, String version) {
         this.name = name
         this.version = version
+    }
+
+    SoftwareComponentContainer getComponents() {
+        return null;
     }
 
     Project getRootProject() {
@@ -551,6 +556,18 @@ final class TestProject implements Project {
             closure()
         }
 
+        Task mustRunAfter(Object[] o) {
+            return null;
+        }
+
+        void setMustRunAfter(Iterable it) {
+
+        }
+
+        TaskDependency getMustRunAfter() {
+            return null;
+        }
+
         Project getProject() {
             return null
         }
@@ -643,6 +660,18 @@ final class TestProject implements Project {
 
         void setEnabled(boolean b) {
 
+        }
+
+        void setFinalizedBy(Iterable it) {
+
+        }
+
+        Task finalizedBy(Object[] o) {
+            return null;
+        }
+
+        TaskDependency getFinalizedBy() {
+            return null;
         }
 
         Task configure(Closure closure) {
@@ -770,6 +799,10 @@ final class TestProject implements Project {
 
         @Override
         void add(final String s, final Class<?> aClass, final Object... objects) {
+        }
+
+        void configure(Class aClass, Action action) {
+
         }
 
         @Override

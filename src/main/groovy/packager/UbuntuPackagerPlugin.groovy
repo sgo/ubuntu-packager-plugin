@@ -15,6 +15,7 @@
  */
 package packager
 
+import javax.inject.Inject;
 import org.gradle.api.Project
 import org.gradle.api.Plugin
 
@@ -35,6 +36,7 @@ final class UbuntuPackagerPlugin implements Plugin<Project> {
 
     private final Packager packager
 
+    @Inject
     UbuntuPackagerPlugin() {
         this(new UbuntuPackager())
     }
