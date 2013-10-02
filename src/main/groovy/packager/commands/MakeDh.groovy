@@ -62,6 +62,10 @@ final class MakeDh implements Command {
         return ['copyright', "${context.name}.install"]
     }
 
+    private def generateCompat = {
+        generateFile('compat')
+    }
+
     private def generateControl = {
         generateFile('control')
     }
@@ -150,7 +154,7 @@ final class MakeDh implements Command {
     private final Context context
     private final GStringTemplateEngine engine = new GStringTemplateEngine()
 
-    private def tasks = [createTargetDir, copyRequiredUserFiles, copyOptionalUserFiles, generateSourceFormat, generateChangelog, generateControl, generateDirs, generateRules]
+    private def tasks = [createTargetDir, copyRequiredUserFiles, copyOptionalUserFiles, generateSourceFormat, generateChangelog, generateCompat, generateControl, generateDirs, generateRules]
 
     MakeDh(File sources, File target, Context context) {
         this.sources = sources

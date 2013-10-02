@@ -6,4 +6,4 @@ echo "Usage: debuild.sh path/to/build/dir"
 fi
 
 cd $1
-exec debuild -us -uc -B
+exec debuild --check-dirname-level 0 -us -uc -A
