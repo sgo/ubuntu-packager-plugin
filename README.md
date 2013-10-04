@@ -4,6 +4,8 @@ ubuntu-packager-plugin
 A basic Ubuntu/Debian packager plugin for [Gradle](http://gradle.org).
 It has some quirks but it should be possible to use it to create packages.
 
+Note: the plugin is available in maven central so you can start using it right away.
+
 Restriction
 -----------
 
@@ -19,10 +21,10 @@ build.gradle example
 
     buildscript {
         repositories {
-            mavenRepo urls:'http://yourrepository.com'
+            mavenCentral()
         }
         dependencies {
-            classpath "be.thinkerit.gradle:ubuntu-packager-plugin:0.1"
+            classpath "be.thinkerit.gradle:ubuntu-packager-plugin:0.3"
         }
     }
         
@@ -47,6 +49,9 @@ build.gradle example
         }
     
     }
+
+Note: if you do not want to add a build script dependency you can add the sources to buildSrc instead.
+See the gradle documentation on [custom plugins](http://www.gradle.org/docs/current/userguide/custom_plugins.html).
 
 dir structure
 -------------
